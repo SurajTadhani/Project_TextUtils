@@ -1,0 +1,9 @@
+.main-div {
+    height: 400px;
+}
+
+@media (max-width: 475px) {
+    .main-div {
+        height: 300px;
+    }
+}

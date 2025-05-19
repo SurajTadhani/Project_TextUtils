@@ -6,6 +6,7 @@ import Alert from "./components/Alert";
 import About from "./components/About";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import SpeechToText from "./components/SpeechToText";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -38,6 +39,7 @@ function App() {
       <div className="container my-5">
         <Routes>
           <Route path="/about" element={<About />} />
+          <Route path="/speech-to-text" element={<SpeechToText />} />
 
           <Route
             exact

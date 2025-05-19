@@ -29,6 +29,11 @@ export default function Navbar(props) {
                 Home
               </Link>
             </li>
+            <li className="nav-item active px-3">
+              <Link className="nav-link" to="/speech-to-text">
+                Speech To Text
+              </Link>
+            </li>
             <li className="nav-item px-3">
               <Link className="nav-link" to="/about">
                 {props.about}
