@@ -1,50 +1,151 @@
 import React from "react";
 
-export default function About() {
+export default function About(props) {
+  const darkMode = props.mode === "dark";
+
   return (
-    <>
-      <h1> TextUtils Project</h1>
-      <hr />
-      <p className="fs-4">
-        Welcome to the TextUtils project, a simple yet powerful React
-        application designed to provide various text manipulation utilities.
-        This project showcases the fundamental capabilities of React and
-        demonstrates how to build interactive and user-friendly web
+    <div
+      className="container my-5 p-4 p-md-5 rounded shadow"
+      style={{
+        maxWidth: "80%",
+        minHeight: "70vh",
+        backgroundColor: darkMode ? "#121212" : "#fff",
+        color: darkMode ? "#e0e0e0" : "#1a1a1a",
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        transition: "all 0.3s ease",
+      }}
+    >
+      <h1
+        className="mb-4 text-center fw-bold"
+        style={{
+          letterSpacing: "2px",
+          fontSize: "2rem",
+          color: darkMode ? "#bb86fc" : undefined, // subtle color in dark mode heading
+          transition: "color 0.3s ease",
+        }}
+      >
+        TextUtils Project
+      </h1>
+      <hr
+        style={{
+          borderColor: darkMode ? "#444" : "#333",
+          borderWidth: 2,
+          marginBottom: "2rem",
+          transition: "border-color 0.3s ease",
+        }}
+      />
+
+      <p
+        className="mb-4"
+        style={{
+          fontSize: "1.1rem",
+          lineHeight: 1.6,
+          color: darkMode ? "#ccc" : undefined,
+          transition: "color 0.3s ease",
+        }}
+      >
+        Welcome to the <strong>TextUtils</strong> project, a simple yet powerful
+        React application designed to provide various text manipulation
+        utilities. This project showcases the fundamental capabilities of React
+        and demonstrates how to build interactive and user-friendly web
         applications.
       </p>
-      <code className="fs-4">
-        1. Text Conversion: <br />
-        Convert any text to uppercase with a single click. <br />
-        Transform text to lowercase for consistency.
-        <br />
-        2. Text Clearing: <br />
-        Clear the entire text input area effortlessly. <br />
-        3.Word and Character Count: <br />
-        Get an instant count of the number of words and characters in your text.
-      </code>
-      <p>
-        <p className="fs-4 py-5">
-          <h2>2. Additional Features :</h2> <br />
-          i. Text Reversal: Reverse the order of characters in the text. <br />
-          ii. Copy to Clipboard: Copy the manipulated text to your clipboard for
-          easy use. <br />
-          iii. Remove Extra Spaces: Clean up your text by removing extra spaces
-          between words.
-        </p>
-      </p>
 
-      <p className="fs-4">
-        <h2> How It Works</h2>
-        1. Enter Text: <br />
-        Type or paste your text into the input area. <br />
-        2. Choose an Operation: <br />
-        Click on the buttons to perform different text operations such as
-        converting to uppercase, lowercase, clearing the text, and more.
-        <br />
-        3.View Results: <br />
-        Instantly see the results of your text manipulation and a summary of
-        word and character counts. <br />
-      </p>
-    </>
+      <section className="mb-5">
+        <h3
+          className="mb-3"
+          style={{
+            textDecoration: "underline",
+            fontSize: "1.3rem",
+            color: darkMode ? "#bb86fc" : undefined,
+            transition: "color 0.3s ease",
+          }}
+        >
+          Core Features
+        </h3>
+        <ul
+          className="mb-4"
+          style={{
+            fontSize: "1.1rem",
+            lineHeight: 1.7,
+            paddingLeft: "1.2rem",
+            color: darkMode ? "#ddd" : undefined,
+            transition: "color 0.3s ease",
+          }}
+        >
+          <li>
+            Convert any text to uppercase or lowercase with a single click.
+          </li>
+          <li>Clear the entire text input area effortlessly.</li>
+          <li>
+            Get an instant count of the number of words and characters in your
+            text.
+          </li>
+        </ul>
+      </section>
+
+      <section className="mb-5">
+        <h3
+          className="mb-3"
+          style={{
+            textDecoration: "underline",
+            fontSize: "1.3rem",
+            color: darkMode ? "#bb86fc" : undefined,
+            transition: "color 0.3s ease",
+          }}
+        >
+          Additional Features
+        </h3>
+        <ul
+          style={{
+            fontSize: "1.1rem",
+            lineHeight: 1.7,
+            paddingLeft: "1.2rem",
+            color: darkMode ? "#ddd" : undefined,
+            transition: "color 0.3s ease",
+          }}
+        >
+          <li>Text Reversal: Reverse the order of characters in the text.</li>
+          <li>
+            Copy to Clipboard: Copy the manipulated text to your clipboard for
+            easy use.
+          </li>
+          <li>
+            Remove Extra Spaces: Clean up your text by removing extra spaces
+            between words.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h3
+          className="mb-3"
+          style={{
+            textDecoration: "underline",
+            fontSize: "1.3rem",
+            color: darkMode ? "#bb86fc" : undefined,
+            transition: "color 0.3s ease",
+          }}
+        >
+          How It Works
+        </h3>
+        <ol
+          style={{
+            fontSize: "1.1rem",
+            lineHeight: 1.7,
+            paddingLeft: "1.2rem",
+            color: darkMode ? "#ddd" : undefined,
+            transition: "color 0.3s ease",
+          }}
+        >
+          <li>Enter Text: Type or paste your text into the input area.</li>
+          <li>
+            Choose an Operation: Use buttons to perform text operations like
+            converting case, clearing text, etc.
+          </li>
+          <li>View Results: See instant results and summaries.</li>
+        </ol>
+      </section>
+    </div>
   );
 }

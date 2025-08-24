@@ -1,56 +1,123 @@
-import React, { useState } from 'react'
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import React, { useState } from "react";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 import useClipboard from "react-use-clipboard";
 import { IoArrowBack } from "react-icons/io5";
-import { useNavigate } from 'react-router-dom';
-import './SpeechToText.css'
+import { useNavigate } from "react-router-dom";
+import "./SpeechToText.css";
 
 const SpeechToText = () => {
-    const [textToCopy, setTextToCopy] = useState()
-    const [startListen, setListen] = useState(false)
-    const navigate = useNavigate();
-    const [isCopied, setCopied] = useClipboard(textToCopy,{
-        successDuration: 2000
-    });
-    const startListening = () => {
-        SpeechRecognition.startListening({ continuous: true, language : 'en-IN' })
-        setListen(true)
-    }
-    const stopListening = () => {
-        SpeechRecognition.stopListening()
-        setListen(false)
-    }
-    const { transcript, browserSupportsSpeechRecognition } = useSpeechRecognition()
-    if (!browserSupportsSpeechRecognition) {
-        return null
-      }
+  const [textToCopy, setTextToCopy] = useState("");
+  const [startListen, setListen] = useState(false);
+  const navigate = useNavigate();
+  const [isCopied, setCopied] = useClipboard(textToCopy, {
+    successDuration: 2000,
+  });
+
+  const startListening = () => {
+    SpeechRecognition.startListening({ continuous: true, language: "en-IN" });
+    setListen(true);
+  };
+  const stopListening = () => {
+    SpeechRecognition.stopListening();
+    setListen(false);
+  };
+  const { transcript, browserSupportsSpeechRecognition } = useSpeechRecognition();
+
+  if (!browserSupportsSpeechRecognition) {
+    return (
+      <div className="container text-center mt-5">
+        <h3>Your browser does not support Speech Recognition.</h3>
+      </div>
+    );
+  }
+
   return (
-    <div className='container mt-5'>
-         <div role="button" className="cursor-pointer mb-3">
-                  <IoArrowBack
-                    className="fs-1 cursor-pointer text-black border rounded-5 p-2 "
-                    onClick={() => navigate(-1)}
-                  />
-                </div>
-      <div className="">
-        <h2>Speech to Text Converter</h2>
-        <br />
-        <div  className='overflow-y-scroll w-full border border-1 rounded-3 shadow-sm p-4 my-3 fs-3 main-div' onClick={() => setTextToCopy(transcript)}>
-         
-          
-   {transcript}
-        </div>
-        <div className="d-flex justify-content-evenly gap-3 flex-column flex-md-row align-items-center">
-            
-            <button className='btn btn-primary px-5' onClick={setCopied}>
-       {isCopied ? "Copied!" : "Copy To Clipboard"}
-    </button>
-            <button onClick={startListening} className='btn btn-primary px-5'>{startListen ? "Listening...." : "Start Listening"}</button>
-            <button onClick={stopListening} className='btn btn-primary px-5'>Stop Listening</button>
-        </div>
+    <div
+      className="container mt-5 p-4 rounded shadow"
+      style={{
+        maxWidth: "700px",
+        backgroundColor: "#fefefe",
+        boxShadow:
+          "0 8px 16px rgba(0,0,0,0.1), 0 6px 20px rgba(0,0,0,0.1)",
+        color: "#222",
+        userSelect: "text",
+      }}
+    >
+      {/* Back Button */}
+      <div className="mb-4">
+        <IoArrowBack
+          className="fs-1 text-primary"
+          role="button"
+          onClick={() => navigate(-1)}
+          style={{ cursor: "pointer", transition: "color 0.2s" }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = "#0d6efd")}
+          onMouseLeave={(e) => (e.currentTarget.style.color = "#0d6efd")}
+        />
+      </div>
+
+      {/* Heading */}
+      <h2 className="mb-4 text-center fw-bold" style={{ letterSpacing: "1px" }}>
+        Speech to Text Converter
+      </h2>
+
+      {/* Transcript Display */}
+      <div
+        className="border rounded p-3 mb-4 shadow-sm"
+        style={{
+          minHeight: "180px",
+          backgroundColor: "#e9ecef",
+          overflowY: "auto",
+          fontSize: "1.25rem",
+          lineHeight: "1.5",
+          whiteSpace: "pre-wrap",
+          cursor: "text",
+          userSelect: "text",
+          borderColor: "#ced4da",
+        }}
+        onClick={() => setTextToCopy(transcript)}
+        title="Click here to set text for copying"
+        aria-label="Speech transcript text"
+      >
+        {transcript || (
+          <span className="text-muted fst-italic">
+            Your spoken words will appear here...
+          </span>
+        )}
+      </div>
+
+      {/* Buttons */}
+      <div className="d-flex flex-column flex-md-row justify-content-center gap-3">
+        <button
+          className="btn btn-outline-primary flex-grow-1"
+          onClick={setCopied}
+          disabled={!transcript}
+          style={{ minWidth: "150px" }}
+        >
+          {isCopied ? "Copied!" : "Copy to Clipboard"}
+        </button>
+        <button
+          className={`btn ${
+            startListen ? "btn-success" : "btn-primary"
+          } flex-grow-1`}
+          onClick={startListening}
+          disabled={startListen}
+          style={{ minWidth: "150px" }}
+        >
+          {startListen ? "Listening..." : "Start Listening"}
+        </button>
+        <button
+          className="btn btn-danger flex-grow-1"
+          onClick={stopListening}
+          disabled={!startListen}
+          style={{ minWidth: "150px" }}
+        >
+          Stop Listening
+        </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SpeechToText
+export default SpeechToText;
