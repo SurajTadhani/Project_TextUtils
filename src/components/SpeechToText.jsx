@@ -7,7 +7,7 @@ import { IoArrowBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import "./SpeechToText.css";
 
-const SpeechToText = () => {
+const SpeechToText = (props) => {
   const [textToCopy, setTextToCopy] = useState("");
   const [startListen, setListen] = useState(false);
   const navigate = useNavigate();
@@ -33,19 +33,24 @@ const SpeechToText = () => {
     );
   }
 
+
+  const darkMode = props.mode === "dark";
+
   return (
     <div
-      className="container mt-5 p-4 rounded shadow"
-      style={{
-        maxWidth: "700px",
-        backgroundColor: "#fefefe",
-        boxShadow:
+      className="container mt-5 p-4 rounded shadow dark:"
+       style={{
+         maxWidth: "700px",
+          backgroundColor: darkMode ? "#2c2c2c" : "#f9f9f9",
+          color: darkMode ? "white" : "#222",
+          transition: "all 0.3s ease",
+          userSelect: "text",
+           boxShadow:
           "0 8px 16px rgba(0,0,0,0.1), 0 6px 20px rgba(0,0,0,0.1)",
         color: "#222",
-        userSelect: "text",
-      }}
+        }}
     >
-      {/* Back Button */}
+   
       <div className="mb-4">
         <IoArrowBack
           className="fs-1 text-primary"
@@ -67,7 +72,6 @@ const SpeechToText = () => {
         className="border rounded p-3 mb-4 shadow-sm"
         style={{
           minHeight: "180px",
-          backgroundColor: "#e9ecef",
           overflowY: "auto",
           fontSize: "1.25rem",
           lineHeight: "1.5",

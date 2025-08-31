@@ -7,12 +7,12 @@ export default function Navbar(props) {
   const collapseRef = useRef(null);
   const location = useLocation();
 
-  // Close nav on route change (user clicks any link)
+  // Close nav on route change
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
 
-  // Close nav on outside click except toggle button
+  // Close nav on outside click
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -32,17 +32,39 @@ export default function Navbar(props) {
     };
   }, [isOpen]);
 
+  // Dark/Light Toggle with only icon
+  const DarkModeToggle = () => (
+    <div
+      className="d-flex align-items-center ps-3 lg-mt-4 mt-lg-0"
+      style={{ cursor: "pointer" }}
+      onClick={props.toggleMode}
+    >
+    <i
+  className={`fas ${props.mode === "light" ? "fa-moon" : "fa-sun"} dark-toggle-icon`}
+  style={{
+    fontSize: "1.9rem",
+    marginLeft: "12px",
+    marginRight: "12px",
+    color: props.mode === "light" ? "#333" : "#FFD43B",
+  }}
+></i>
+
+    </div>
+  );
+
   return (
     <nav
       className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}
     >
       <div className="container-fluid">
-        {/* Brand / Title */}
+        {/* Brand */}
         <Link className="navbar-brand fs-2 fw-bold" to="/">
           {props.title}
         </Link>
-
-        {/* Hamburger / Close Toggle Button */}
+<div className="d-flex align-items-center justify-content-end gap-3 d-lg-none">
+  {/* Dark Mode Toggle (mobile) */}
+          <DarkModeToggle  />
+        {/* Hamburger Button */}
         <button
           className="navbar-toggler p-2 border-0"
           type="button"
@@ -52,7 +74,11 @@ export default function Navbar(props) {
         >
           {isOpen ? (
             <span
-              style={{ fontWeight: "bold", fontSize: "1.8rem", color: props.mode === "dark" ? "#ddd" : "#333" }}
+              style={{
+                fontWeight: "bold",
+                fontSize: "1.8rem",
+                color: props.mode === "dark" ? "#ddd" : "#333",
+              }}
             >
               &times;
             </span>
@@ -60,11 +86,14 @@ export default function Navbar(props) {
             <span className="navbar-toggler-icon" />
           )}
         </button>
+</div>
 
-        {/* Sliding Mobile Nav Panel */}
+        {/* ============== Mobile Sidebar ============== */}
         <div
           ref={collapseRef}
-          className={`collapse navbar-collapse${isOpen ? " show" : ""}`}
+          className={`collapse navbar-collapse d-lg-none${
+            isOpen ? " show" : ""
+          }`}
           id="navbarSupportedContent"
           style={{
             position: "fixed",
@@ -83,7 +112,8 @@ export default function Navbar(props) {
             zIndex: 1050,
           }}
         >
-          {/* Close button inside panel for accessibility (optional, since toggle button also present) */}
+          
+          {/* Close Button inside sidebar */}
           <button
             onClick={() => setIsOpen(false)}
             aria-label="Close menu"
@@ -103,48 +133,41 @@ export default function Navbar(props) {
 
           <ul className="navbar-nav fs-5 fw-semibold">
             <li className="nav-item px-3 py-3 border-bottom">
-              <Link className="nav-link" to="/">
-                Home
-              </Link>
+              <Link className="nav-link" to="/">Home</Link>
             </li>
             <li className="nav-item px-3 py-3 border-bottom">
-              <Link className="nav-link" to="/speech-to-text">
-                Speech To Text
-              </Link>
+              <Link className="nav-link" to="/speech-to-text">Speech To Text</Link>
             </li>
             <li className="nav-item px-3 py-3 border-bottom">
-              <Link className="nav-link" to="/about">
-                {props.about}
-              </Link>
+              <Link className="nav-link" to="/about">{props.about}</Link>
             </li>
           </ul>
 
-          {/* Dark Mode Toggle */}
-          <div
-            className={`form-check form-switch text-${
-              props.mode === "light" ? "dark" : "light"
-            } ps-3 mt-4`}
-          >
-            <input
-              className="form-check-input"
-              onClick={props.toggleMode}
-              type="checkbox"
-              role="switch"
-              id="flexSwitchCheckDefault"
-            />
-            <label
-              className="form-check-label"
-              htmlFor="flexSwitchCheckDefault"
-              style={{ cursor: "pointer" }}
-            >
-              {props.mode === "light"
-                ? "Enable Dark Mode"
-                : "Disable Dark Mode"}
-            </label>
-          </div>
+          
         </div>
 
-        {/* Overlay when menu is open */}
+        {/* ============== Desktop Nav ============== */}
+        <div
+          className="collapse navbar-collapse d-none d-lg-flex justify-content-end gap-5"
+          id="navbarSupportedContent"
+        >
+          <ul className="navbar-nav fs-5 fw-semibold">
+            <li className="nav-item px-3">
+              <Link className="nav-link" to="/">Home</Link>
+            </li>
+            <li className="nav-item px-3">
+              <Link className="nav-link" to="/speech-to-text">Speech To Text</Link>
+            </li>
+            <li className="nav-item px-3">
+              <Link className="nav-link" to="/about">{props.about}</Link>
+            </li>
+          </ul>
+
+          {/* Dark Mode Toggle (desktop) */}
+          <DarkModeToggle />
+        </div>
+
+        {/* Overlay */}
         {isOpen && (
           <div
             onClick={() => setIsOpen(false)}

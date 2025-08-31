@@ -38,8 +38,8 @@ function App() {
       <Alert alert={alert} />
       <div className="container my-5">
         <Routes>
-          <Route path="/about"  mode="dark" element={<About />} />
-          <Route path="/speech-to-text" element={<SpeechToText />} />
+          <Route path="/about"  mode={mode} element={<About />} />
+          <Route mode={mode} path="/speech-to-text" element={<SpeechToText />} />
 
           <Route
             exact
